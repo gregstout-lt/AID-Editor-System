@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "aidungeon.js",
+  "description": "Upload changes to AI Dungeon scenarios",
+  "author": "Magic <magicoflolis@tuta.io>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/magicoflolis/aidungeon.js",
+  "bugs": {
+    "url": "https://github.com/magicoflolis/aidungeon.js/issues"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./src/index.d.ts",
+        "default": "./src/index.js"
+      }
+    }
+  },
+  "directories": {
+    "lib": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "run:Dev": "dotenvx run --env AID_ENV=development -f .env --quiet -- node ./utils/ai.dungeon/index.js",
+    "run:Prod": "dotenvx run --env AID_ENV=production -f .env --quiet -- node ./utils/ai.dungeon/index.js"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.44.1",
+    "@eslint/js": "^9.27.0",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^22.15.24",
+    "@types/watchpack": "^2.4.4",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.0"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "minimist": "^1.2.8",
+    "terser": "^5.40.0",
+    "watchpack": "^2.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicoflolis/aidungeon.js.git"
+  },
+  "keywords": [
+    "aidungeon",
+    "aid"
+  ],
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
+  }
+}
