@@ -3,7 +3,7 @@
   "name": "aidungeon.js",
   "description": "Upload changes to AI Dungeon scenarios",
   "author": "Magic <magicoflolis@tuta.io>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "homepage": "https://github.com/magicoflolis/aidungeon.js",
   "bugs": {
@@ -26,12 +26,7 @@
   "files": [
     "src"
   ],
-  "scripts": {
-    "run:Dev": "dotenvx run --env AID_ENV=development -f .env --quiet -- node ./utils/ai.dungeon/index.js",
-    "run:Prod": "dotenvx run --env AID_ENV=production -f .env --quiet -- node ./utils/ai.dungeon/index.js"
-  },
   "devDependencies": {
-    "@dotenvx/dotenvx": "^1.44.1",
     "@eslint/js": "^9.27.0",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.15.24",
@@ -45,7 +40,6 @@
   },
   "dependencies": {
     "axios": "^1.9.0",
-    "minimist": "^1.2.8",
     "terser": "^5.40.0",
     "watchpack": "^2.4.4"
   },

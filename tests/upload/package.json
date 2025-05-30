@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "aidungeon.js_uploader",
+  "description": "Upload changes to AI Dungeon scenarios",
+  "author": "Magic <magicoflolis@tuta.io>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/magicoflolis/aidungeon.js",
+  "bugs": {
+    "url": "https://github.com/magicoflolis/aidungeon.js/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node ./upload.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicoflolis/aidungeon.js.git"
+  },
+  "private": true,
+  "keywords": [
+    "aidungeon",
+    "aid"
+  ],
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
+  },
+  "dependencies": {
+    "aidungeon.js": "link:..\\.."
+  }
+}
