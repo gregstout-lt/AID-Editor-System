@@ -10,6 +10,7 @@ export default tseslint.config([
   eslintConfigPrettier,
   {
     rules: {
+      'no-undef': 'off',
       'no-var': 'error',
       'prefer-const': ['error', { destructuring: 'all' }],
       'prefer-promise-reject-errors': 'error',
@@ -25,9 +26,9 @@ export default tseslint.config([
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
-				...globals.es2024,
-				...globals.node
-			}
+        ...globals.es2024,
+        ...globals.node
+      }
     }
   },
   {
@@ -36,14 +37,14 @@ export default tseslint.config([
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
-				...globals.es2024,
-				...globals.browser
-			}
+        ...globals.es2024,
+        ...globals.browser
+      }
     }
   },
   {
     files: ['tests/**/*.js'],
-    ignores: ['tests/**/upload.js'],
+    ignores: ['tests/**/upload.js', 'tests/**/code.js'],
     rules: {
       'no-undef': 'off',
       'no-var': 'error',
@@ -62,4 +63,47 @@ export default tseslint.config([
       globals: globals.es2022
     }
   },
+  {
+    files: ['tests/**/code.js', 'scripting/*.js'],
+    rules: {
+      'no-var': 'error',
+      'no-useless-escape': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      'prefer-const': ['error', { destructuring: 'all' }],
+      'prefer-promise-reject-errors': 'error',
+      'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+      quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
+      'space-before-blocks': ['error', 'always']
+    },
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'script',
+      globals: {
+        ...globals.es2022,
+        addStoryCard: 'writable',
+        updateStoryCard: 'writable',
+        removeStoryCard: 'writable',
+        log: 'writable',
+        history: 'writable',
+        storyCards: 'writable',
+        state: 'writable',
+        memory: 'writable',
+        text: 'writable',
+        stop: 'writable',
+        info: 'writable'
+      }
+    }
+  },
+  {
+    files: ['tools/*.js', 'utils/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.es2024,
+        ...globals.node
+      }
+    }
+  }
 ]);

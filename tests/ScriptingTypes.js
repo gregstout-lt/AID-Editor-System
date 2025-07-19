@@ -119,7 +119,7 @@ if (!globalThis.addStoryCard) {
    * _Example(s):_
    *
    * ```js
-   * log(addStoryCard("Superman", "a eagle")); // Returns new length of the `storyCards` array.
+   * log(addStoryCard("Superman", "a bird")); // Returns new length of the `storyCards` array.
    *
    * // Find and create Story Cards
    * function getStoryCard(keys, entry, type = 'Custom') {
@@ -147,7 +147,7 @@ if (!globalThis.addStoryCard) {
    * @param {T} [type='Custom'] - This will set {@link StoryCard.type}.
    * @returns {number} The new length of the storyCards array.
    */
-  globalThis.addStoryCard = function (keys, entry, type) {};
+  globalThis.addStoryCard = (keys, entry, type) => {};
 }
 if (!globalThis.updateStoryCard) {
   /**
@@ -190,7 +190,7 @@ if (!globalThis.updateStoryCard) {
    * @param {T} type - {@link StoryCard.type}.
    * @returns {void}
    */
-  globalThis.updateStoryCard = function (index, keys, entry, type) {};
+  globalThis.updateStoryCard = (index, keys, entry, type) => {};
 }
 if (!globalThis.removeStoryCard) {
   /**
@@ -224,7 +224,7 @@ if (!globalThis.removeStoryCard) {
    * @param {I} index - {@link StoryCard} index number.
    * @returns {void}
    */
-  globalThis.removeStoryCard = function (index) {};
+  globalThis.removeStoryCard = (index) => index;
 }
 if (!globalThis.log) {
   /**
@@ -238,7 +238,7 @@ if (!globalThis.log) {
    * @param {...*} data
    * @returns {void}
    */
-  globalThis.log = function (...data) {};
+  globalThis.log = (...data) => data;
 }
 /**
  * `history` is an array of recent actions from the adventure, see {@link History}.
