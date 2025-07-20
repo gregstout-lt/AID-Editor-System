@@ -39,9 +39,7 @@ director.input(fnA, fnB, fnC);
 
 ## Installation
 
-For scenario creators, recommend using my "Types for Scripting API" along side.
-
-https://discord.com/channels/903327676884979802/1380351054440562840/1380351136707510343
+For scenario creators, recommend using my "[Types for Scripting API](<https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md#types-for-scripting-api>)" along side.
 
 **Shared Library:**
 
