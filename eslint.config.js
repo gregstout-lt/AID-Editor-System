@@ -105,5 +105,14 @@ export default tseslint.config([
         ...globals.node
       }
     }
+  },
+  {
+    files: ['types/*.js'],
+    rules: {
+      'no-unused-vars': 'off',
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off'
+    }
   }
 ]);
