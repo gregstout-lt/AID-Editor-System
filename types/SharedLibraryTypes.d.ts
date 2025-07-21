@@ -2,7 +2,9 @@
 /// <reference lib="es2022"/>
 
 /**
- * Ignore this.
+ * Scripting API: https://help.aidungeon.com/scripting
+ * 
+ * Scripting Guidebook: https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md
  */
 export type LibraryAPI = unknown;
 

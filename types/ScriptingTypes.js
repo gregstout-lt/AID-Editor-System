@@ -1,3 +1,9 @@
+/**
+ * Scripting API: https://help.aidungeon.com/scripting
+ * 
+ * Scripting Guidebook: https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md
+ */
+
 // #region "Scripts" Typings
 /// <reference no-default-lib="true"/>
 /// <reference lib="es2022"/>
