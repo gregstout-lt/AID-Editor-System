@@ -4,6 +4,9 @@ Director is an "easier" way to execute functions, scripts, and hooks within your
 
 Director executes provided `modifier` functions in a _chain_ (`FuncA => FuncB => etc.`). The return value(s) are then _passed down_ to the next function.
 
+<details>
+  <summary>Code Example</summary>
+
 ```js
 // `onInput` hook
 
@@ -35,23 +38,72 @@ director.input(fnA, fnB, fnC);
 // director.onInput(fnA, fnB, fnC);
 ```
 
+</details>
+
 ---
 
 ## Installation
 
-For scenario creators, recommend using my "[Types for Scripting API](<https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md#types-for-scripting-api>)" along side.
+> For scenario creators, recommend using my "[Types for Scripting API](<https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md#types-for-scripting-api>)" along side.
 
-**Shared Library:**
+<details>
+  <summary>Shared Library</summary>
 
-Copy n paste [director.js](https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/scripting/director.js)
+- Location: `Shared Library > Library`
+- Code: [director.js](<https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/scripting/director.js>)
+  - _Copy and paste Code into Location._
 
-**Hooks (Input/Context/Output):**
+<details>
+  <summary>Example Usage</summary>
 
-- **IMPORTANT:**
-  - Ensure `// Do not remove this line` is ALWAYS present at the bottom of your hook(s)! _Or just add `//` as the last line._
-  - Remove/rename your `modifier` function!
-    - Example: `const modifier` => `const fn`
-  - Remove the `modifier(text)` lines
+```js
+const stateA = () => {
+  state.fooA = 'barA'
+};
+const stateB = () => {
+  state.fooB = 'barB'
+};
+const stateC = () => {
+  state.fooC = 'barC'
+};
+
+director.library(stateA, stateB, stateC);
+
+// Equivalent to
+
+const stateA = () => {
+  state.fooA = 'barA'
+};
+const stateB = () => {
+  state.fooB = 'barB'
+};
+const stateC = () => {
+  state.fooC = 'barC'
+};
+
+stateA();
+stateB();
+stateC();
+```
+
+</details>
+
+</details>
+
+<details>
+  <summary>Hooks (Input/Context/Output)</summary>
+
+> [!IMPORTANT]
+> Ensure `void 0` is **ALWAYS** present at the bottom of your hooks! _Or just add `//` as the last line._
+
+- Remove/rename your `modifier` function!
+  - Example: `const modifier` => `const fn`
+- Remove any `modifier(text)` lines
+
+<details>
+  <summary>Code Examples</summary>
+
+Primary:
 
 ```js
 const fn = (text) => {
@@ -64,10 +116,10 @@ director.context(fn); // `onModelContext` hook
 
 director.output(fn); // `onOutput` hook
 
-// Do not remove this line
+void 0
 ```
 
-**Alternative(s):**
+Alternative:
 
 ```js
 // Wrap entire "modifier()" inside `{ }`
@@ -81,40 +133,49 @@ director.output(fn); // `onOutput` hook
   director.input(modifier);
 }
 
-// Do not remove this line
+void 0
 ```
+
+</details>
+
+</details>
 
 ---
 
-## Use Cases
+## API & Usages
 
-_Yes it works with AutoCards._
+<details>
+  <summary>API</summary>
 
-**AutoCards:**
+<details>
+  <summary>Modifier Functions</summary>
+
+```ts
+function ModifierFN<T extends typeof text, S extends typeof stop>(this: typeof Director, text: T, stop: S, type: "library"): {
+  text: T;
+  stop?: S;
+};
+```
 
 ```js
-// Shared Library
-function AutoCards() {}
+/**
+ * @typedef { <T extends unknown, S extends boolean>(this: typeof Director, text: T, stop?: S, type: 'output') => { text: T; stop?: S } } ModifierFN
+ */
 
-// Replace the "AutoCards(null);" line
-director.library(AutoCards);
-
-// `onInput` hook
-
-director.input(AutoCards);
-
-// `onModelContext` hook
-
-director.context(AutoCards);
-
-// `onOutput` hook
-
-director.output(AutoCards);
+/**
+ * @type { ModifierFN }
+ */
+const fn = function (text, stop, type) {
+  // Note using "this" is typeof Director
+  console.log(this.text, text, stop, type);
+  return { text, stop }
+}
 ```
 
----
+</details>
 
-**Strings:**
+<details>
+  <summary>Parameter: Strings</summary>
 
 ```js
 // `onOutput` hook
@@ -129,11 +190,14 @@ const myFunction = (text) => {
 director.output(fn, fnStr, myFunction.toString());
 
 // Output: "My character will draw a card then pause the story."
+
+void 0
 ```
 
----
+</details>
 
-**Arrays:**
+<details>
+  <summary>Return: Arrays</summary>
 
 ```js
 // `onModelContext` hook
@@ -145,6 +209,46 @@ const arr = () => {
 director.context(arr);
 
 // Output: "stop" & stop = true
+
+void 0
 ```
+
+</details>
+
+---
+
+</details>
+
+<details>
+  <summary>AutoCards</summary>
+
+> [!IMPORTANT]
+> Replace `AutoCards(null);` line with `director.library(AutoCards);`
+
+_Yes it works with AutoCards._
+
+```js
+// Shared Library
+
+//#region Director
+// ...
+//#endregion
+
+function AutoCards() {} director.library(AutoCards); // ...
+
+// `onInput` hook
+
+director.input(AutoCards);
+
+// `onModelContext` hook
+
+director.context(AutoCards);
+
+// `onOutput` hook
+
+director.output(AutoCards);
+```
+
+</details>
 
 ---
