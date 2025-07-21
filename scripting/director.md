@@ -93,9 +93,8 @@ stateC();
 <details>
   <summary>Hooks (Input/Context/Output)</summary>
 
-> [!IMPORTANT]
-> Ensure `void 0` is **ALWAYS** present at the bottom of your hooks! _Or just add `//` as the last line._
-
+- **IMPORTANT!**
+- Ensure `void 0` is **ALWAYS** present at the bottom of your hooks! _Or just add `//` as the last line._
 - Remove/rename your `modifier` function!
   - Example: `const modifier` => `const fn`
 - Remove any `modifier(text)` lines
@@ -222,9 +221,6 @@ void 0
 <details>
   <summary>AutoCards</summary>
 
-> [!IMPORTANT]
-> Replace `AutoCards(null);` line with `director.library(AutoCards);`
-
 _Yes it works with AutoCards._
 
 ```js
@@ -234,6 +230,7 @@ _Yes it works with AutoCards._
 // ...
 //#endregion
 
+// Replace "AutoCards(null);" line with "director.library(AutoCards);"
 function AutoCards() {} director.library(AutoCards); // ...
 
 // `onInput` hook
