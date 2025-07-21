@@ -1,49 +1,73 @@
+/**
+ * Scripting API: https://help.aidungeon.com/scripting
+ * 
+ * Scripting Guidebook: https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md
+ */
+
 /// <reference no-default-lib="true"/>
 /// <reference lib="es2022"/>
 
 //#region Director
 
 /**
- * @typedef { <T extends typeof text>(text: T) => { text: T; stop?: typeof stop } } ModifierFN
+ * Similar to {@link Modifier} type and {@link modifier} function.
+ *
+ * @typedef { <T extends typeof text, S extends typeof stop>(this: typeof Director, text: T, stop: S, type: 'library') => { text: T; stop?: S } } ModifierFN
  */
 
-class Director {
-  static error = class DirectorError extends Error {
-    constructor(...params) {
-      /** Pass remaining arguments (including vendor specific ones) to parent constructor */
-      super(...params);
-      /** Maintains proper stack trace for where our error was thrown (non-standard) */
-      if ('captureStackTrace' in Error) {
-        /** Avoid `DirectorError` itself in the stack trace */
-        Error.captureStackTrace(this, DirectorError);
-      }
-      this.tmp = this.toString();
-      /** A stack trace exists for this error */
-      if (this.stack) {
-        const [, line, column] = /(\d+):(\d+)$/.exec(this.stack) ?? [];
-        if (line) {
-          /** The top-level location of this error is known */
-          this.tmp = `${this.tmp} at line #${line} column #${column}`;
-        } else {
-          this.tmp = `${this.tmp} ${this.stack
-            .replace(
-              new RegExp(
-                `${this.name}:|at\\s*(#throwError|Const.(declare|initialize|read)|new\\s*Const)\\s*(\\d+:\\d+)`,
-                'g'
-              ),
-              ''
-            )
-            .replace(/\s{2,}/g, ' ')
-            .trim()}`;
-        }
-      }
-      if (this.cause) {
-        this.tmp = `[${this.cause}] ${this.tmp}`;
-      }
-      this.message = this.tmp;
-      delete this.tmp;
+//#region Console
+
+Error.stackTraceLimit = 3;
+
+class AIDError extends Error {
+  /**
+   * @param { string } [message]
+   * @param { ErrorOptions } [options]
+   */
+  constructor(message, options) {
+    super(message, options);
+    const stack = this.stack || '';
+    if ('captureStackTrace' in Error) {
+      /** Avoid `AIDError` in stack trace */
+      Error.captureStackTrace(this, AIDError);
+      /** Avoid `Director.log` in stack trace */
+      Error.captureStackTrace(this, Director.log);
     }
-  };
+    let tmp = '';
+    const reg = /\s?\(?(\<isolated-vm\w*\>):(\d+):(\d+)\)?/gm;
+    const clean = stack
+      .replace(/^Error:\s(\w*Error:)/gm, (_m, p1) => p1)
+      .replace(reg, (_m, _p1, line, column) => `:${line}:${column}`);
+    tmp += clean;
+    this.stack = clean;
+    if (!this.cause) {
+      const [, c] = /\s(\w+):\d+:\d+/.exec(stack) ?? [];
+      if (c) {
+        this.cause = c;
+      } else {
+        this.cause = 'Unknown';
+      }
+    }
+    this.message = `[${this.cause}] ${tmp}`;
+  }
+}
+
+//#endregion
+
+const Director = class {
+  /**
+   * @param {unknown[]} messages
+   */
+  static log(...messages) {
+    for (let m of messages) {
+      if (m instanceof Error) {
+        const e = m instanceof AIDError ? m : new AIDError(m.message, m.cause || undefined);
+        m = e.message;
+      }
+      console.log(m);
+      if (typeof m === 'string') state.message = m;
+    }
+  }
   static util = {
     /**
      * @template {ModifierFN} F
@@ -55,63 +79,71 @@ class Director {
     /**
      * @template { string | ModifierFN } Code
      * @param { Code } code
+     * @param { boolean } [useEval]
      * @returns { ?ModifierFN }
      */
-    Func(code) {
+    Func(code, useEval) {
       try {
-        if (typeof code === 'string') return eval(`(() => { return ${code} })()`);
+        const s = Director.util.objToStr(code);
+        if (!/String|Function/.test(s))
+          throw new AIDError(`"code" must be a type of string or function, got "${s}"`, {
+            cause: 'Director.util.Func'
+          });
+        if (typeof code === 'string') {
+          const parse = code.startsWith('return ') ? code : `return ${code}`;
+          if (useEval) {
+            return eval(`(() => { ${parse} })()`);
+          }
+          return new Object.constructor(parse)();
+        }
         return code;
       } catch (e) {
-        console.log('{ error }', e);
+        const ex = e instanceof AIDError ? e : new AIDError(e, { cause: 'Director.util.Func()' });
+        Director.log(ex.message);
         return null;
       }
     },
     /**
-     * @returns { string }
+     * @param {?} obj
+     * @returns {string}
      */
     objToStr(obj) {
       return Object.prototype.toString.call(obj).match(/\[object (.*)\]/)[1];
     },
     /**
-     * @param obj
-     * @returns { obj is { [key: string]: unknown } }
+     * @param {?} obj
+     * @returns {obj is { [key: string]: unknown }}
      */
     isObj(obj) {
       return Director.util.objToStr(obj) === 'Object';
     },
     /**
-     * @param obj
-     * @returns { obj is null }
-     * @returns { obj is undefined }
+     * @param {?} obj
+     * @returns {obj is (null | undefined)}
      */
     isNull(obj) {
       return Object.is(obj, null) || Object.is(obj, undefined);
     }
   };
   /**
-   * @type { typeof text }
+   * @type {['library', 'input', 'context', 'output']}
    */
-  static originalText = globalThis.text;
-  /**
-   * @type { typeof stop }
-   */
-  static originalStop = globalThis.stop;
   static types = ['library', 'input', 'context', 'output'];
   /**
-   * @type { 'library' | 'input' | 'context' | 'output' }
+   * @type {'library' | 'input' | 'context' | 'output'}
    */
   type = 'library';
   /**
-   * @type { { [key: string]: { _: {}; scripts: ModifierFN["name"][]; } } }
+   * @type {{ [key: string]: { _: {}; scripts: ModifierFN["name"][] } }}
    */
   store = {};
   constructor() {
     this.load = this.load.bind(this);
 
     /**
-     * Ensures a `modifier` function exists & prevent it from being `undefined`
+     * Ensures `modifier` function exists & prevent it from being `undefined`
      *
-     * _This is the last function called in chain._
+     * _This is the last executed function in the chain._
      */
     const modifier = () => {
       const { text, stop } = this;
@@ -122,21 +154,15 @@ class Director {
 
     for (const type of Director.types) {
       /**
-       * @param  {...ModifierFN | string} modifiers
+       * @param  {...ModifierFN} modifiers
        */
       this[type] = (...modifiers) => this.load(type, ...modifiers);
-      this[`on${type.at(0).toUpperCase()}${type.slice(1)}`] = this[type];
+      this[`on${type[0].toUpperCase()}${type.slice(1)}`] = this[type];
     }
-
-    if (!('$store' in this.state)) this.setStore();
-  }
-  setStore() {
-    globalThis.state.$store = state.$store = this.store;
-    return this;
   }
   /**
-   * @template { Text | ModifierFN | [typeof text, typeof stop] | ReturnType<ModifierFN> } T
-   * @param { T } str
+   * @template {Text | ModifierFN | [typeof text, typeof stop] | ReturnType<ModifierFN>} T
+   * @param {T} str
    */
   setText(str) {
     const { isObj, objToStr, isNull } = Director.util;
@@ -145,27 +171,32 @@ class Director {
      */
     const extract = (val) => {
       if (val instanceof Promise) {
-        throw new Director.error('Unsupported, "val" is a type of Promise.', {
+        throw new AIDError('Unsupported, "val" is a type of Promise.', {
           cause: 'Director.text'
         });
       } else if (typeof val === 'function') {
+        const { text, stop, type } = this;
         /**
          * @type { T }
          */
-        let r = Director.originalText;
+        let r = text;
         try {
           if (/autocards?/i.test(val.name)) {
-            if (/library/i.test(this.type)) {
+            if (/library/i.test(type)) {
               val(null);
             } else {
-              r = val(this.type, this.text, this.stop);
+              r = val(type, text, stop);
             }
           } else {
-            r = val.call(this, this.text, this.stop, this.type);
+            r = val.call(this, text, stop, type);
           }
         } catch (e) {
-          console.log('{cache} Error:', e);
-          return Director.originalText;
+          const ex =
+            e instanceof AIDError
+              ? e
+              : new AIDError(e, { cause: val.name || 'Director.setText():extract' });
+          Director.log(ex.message);
+          return text;
         }
         return extract(r);
       } else if (Array.isArray(val)) {
@@ -181,7 +212,7 @@ class Director {
     };
     str = extract(str);
     if (Object.is(this.stop, false) && typeof str !== 'string') {
-      throw new Director.error(`"str" must be a type of string, got "${objToStr(str)}"`, {
+      throw new AIDError(`"str" must be a type of string, got "${objToStr(str)}"`, {
         cause: 'Director.text'
       });
     }
@@ -202,24 +233,25 @@ class Director {
     return this;
   }
   /**
-   * @template { this['type'] } T
-   * @param { T } type
-   * @param { ...(ModifierFN | string) } modifiers
+   * @template {"library" | "input" | "context" | "output"} T
+   * @param {T} type
+   * @param {...ModifierFN} modifiers
    */
-  load(type = 'library', ...modifiers) {
+  load(type, ...modifiers) {
     if (typeof type === 'string' && Director.types.includes(type) && !Object.is(type, this.type))
       this.type = type;
 
-    if (Director.util.modifier(Director.util.Func('typeof modifier !== "undefined" && modifier')))
-      throw new Director.error(`Defined "modifier()" in "${type}"`, {
+    const mod = Director.util.Func('typeof modifier !== "undefined" && modifier');
+    if (mod && Director.util.modifier(mod))
+      throw new AIDError(`Defined "modifier()" in "${type}"`, {
         cause: 'Director.load'
       });
 
     if (!(type in this.store)) {
       this.store[type] = {
         _: {
-          text: Director.originalText,
-          stop: Director.originalStop
+          text: this.text,
+          stop: this.stop
         },
         scripts: this.loadFunc(modifiers, true)
       };
@@ -227,16 +259,16 @@ class Director {
 
     for (const modifier of modifiers) {
       const fn = Director.util.Func(modifier);
-      if (Director.util.modifier(fn)) this.setText(fn);
+      if (fn && Director.util.modifier(fn)) this.setText(fn);
     }
 
-    return this.setStore();
+    return this;
   }
   /**
    * @template S
-   * @template { ModifierFN } modifier
-   * @template { S extends boolean ? modifier["name"] : modifier } R
-   * @param { modifier[] } modifiers
+   * @template { ModifierFN } $modifier
+   * @template { S extends boolean ? string : $modifier } R
+   * @param { $modifier[] } modifiers
    * @param { S } toStr
    * @returns { R[] }
    */
@@ -253,7 +285,7 @@ class Director {
     return [...fnSet];
   }
   /**
-   * @type { text }
+   * @type { typeof text }
    */
   get text() {
     return globalThis.text;
@@ -268,13 +300,7 @@ class Director {
     return globalThis.stop;
   }
   set stop(bol) {
-    this.setStop(bol);
-  }
-  /**
-   * @type { typeof state }
-   */
-  get state() {
-    return (typeof globalThis.state === 'object' && typeof state !== 'undefined' && state) || {};
+    if (typeof bol === 'boolean') this.setStop(bol);
   }
   *[Symbol.iterator]() {
     for (const v of Object.values(this.store)) {
@@ -285,7 +311,7 @@ class Director {
       }
     }
   }
-}
+};
 const director = new Director();
 const { load } = director;
 //#endregion
