@@ -127,7 +127,7 @@ declare global {
   /**
    * ---
    *
-   * Adds a new {@link StoryCard} and returns the index of the new card.
+   * Create a new {@link StoryCard} and returns the new length of storyCards array.
    *
    * If there is already an existing card with the same keys, returns false.
    *

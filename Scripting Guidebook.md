@@ -14,11 +14,46 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
 
 ## **External Links**
 
-**General:**
+> [!IMPORTANT]
+>
+> **READ THE GUIDES!**
+>
+> Even if you know JavaScript or TypeScript, there may be something you *didn't know!*
+
+<details>
+  <summary>✨Secrets to great code✨</summary>
+
+<br>
+
+**You must:**
+
+- **NEVER** use AI assistants for writing code, coding advice, etc.
+  - Using AI is NOT how you learn to code. *If you can't understand it then don't use it.*
+  - It will just end confusing you as can AI make mistakes.
+- **ALWAYS** parse your code through a code linter (eslint, jshint, etc.)
+  - Recommend using a [local](<https://eslint.org>) linter but [online](<https://eslint.org/play>) works too.
+
+---
+
+</details>
+
+<br>
+
+**⭐Guides:**
 
 - ⭐[AI Dungeon Guidebook](<https://help.aidungeon.com>)
   - ⭐[Creating Scripts for AI Dungeon](<https://help.aidungeon.com/scripting>)
   - ⭐[What are Scripts and how do you Install them?](<https://help.aidungeon.com/what-are-scripts-and-how-do-you-install-them>)
+- JavaScript:
+  - ⭐[JavaScript Guide | MDN](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide>)
+  - ⭐[Airbnb JavaScript Style Guide | GitHub](<https://github.com/airbnb/javascript/blob/master/README.md#airbnb-javascript-style-guide->)
+  - [You Don't Know JS Yet (book series) - 2nd Edition | GitHub](<https://github.com/getify/You-Dont-Know-JS>)
+  - [The Modern JavaScript Tutorial | javascript.info](<https://javascript.info/>)
+- TypeScript:
+  - [TypeScript Handbook | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro.html>)
+
+**General:**
+
 - [Monaco - The Editor of the Web](<https://microsoft.github.io/monaco-editor>)
 - [Visual Studio Code - The open source AI code editor](<https://code.visualstudio.com>)
 
@@ -45,9 +80,6 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
 - General:
   - ⭐[JavaScript | MDN](<https://developer.mozilla.org/en-US/docs/Web/JavaScript>)
   - ⭐[Favorite single line of code | 1loc](<https://github.com/phuocng/1loc>) / [Wayback Machine](<https://web.archive.org/web/20250419154835/https://phuoc.ng/collection/1-loc/>)
-  - ⭐[Airbnb JavaScript Style Guide | GitHub](<https://github.com/airbnb/javascript>)
-  - [You Don't Know JS Yet (book series) - 2nd Edition | GitHub](<https://github.com/getify/You-Dont-Know-JS>)
-  - [The Modern JavaScript Tutorial | javascript.info](<https://javascript.info/>)
 - Videos:
   - ⭐[JS Destructuring in 100 Seconds | YouTube](<https://youtu.be/UgEaJBz3bjY>)
   - ⭐[JavaScript Visualized - Event Loop, Web APIs, (Micro)task Queue | YouTube](<https://youtu.be/eiC58R16hb8>)
@@ -59,7 +91,6 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
   - ⭐[JS Projects Utilizing TypeScript | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html>)
   - ⭐[Type Checking JavaScript Files | TypeScript](<https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html>)
   - [Triple-Slash Directives | TypeScript](<https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html>)
-  - [TypeScript Handbook | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro.html>)
 
 ---
 
@@ -78,10 +109,10 @@ Follow these instructions below:
     - Copy everything within [ScriptingTypes.js](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/ScriptingTypes.js>).
     - Paste into the top of your `Scripts > Input | Context | Output` script sections.
 
----
-
 <details>
   <summary>Example Layout</summary>
+
+<br>
 
 Shared Library:
 
@@ -117,9 +148,11 @@ const modifier = (text) => {
 modifier(text)
 ```
 
+---
+
 </details>
 
----
+<br>
 
 - **Local Code Editor:**
   - *You may use the same method instructed **above**.*
@@ -127,10 +160,10 @@ modifier(text)
   - Add `/// <reference types="${relative path}/SharedLibraryTypes.d.ts"/>` to the top of your file if it is a `Library` script.
   - Add `/// <reference types="${relative path}/ScriptingTypes.d.ts"/>` to the top of your file if it is a `Input | Context | Output` script.
 
----
-
 <details>
   <summary>Example Workspace</summary>
+
+<br>
 
 Workspace:
 
@@ -190,22 +223,24 @@ Follow these instructions below:
 - **Local Code Editor:**
   - *Use the same method instructed **above** into each file.*
 
----
-
 <details>
   <summary>Reference Code</summary>
+
+<br>
 
 ```ts
 /// <reference no-default-lib="true"/>
 /// <reference lib="es2022"/>
 ```
 
-</details>
-
 ---
+
+</details>
 
 <details>
   <summary>Example Layout</summary>
+
+<br>
 
 ```js
 /// <reference no-default-lib="true"/>
@@ -230,7 +265,37 @@ function getKingName() {
 ## Scripting API
 
 <details>
-  <summary>Console</summary>
+  <summary>Functions</summary>
+
+<br>
+
+The `Scripting API` comes built-in with these additional functions.
+
+<details>
+  <summary>log / console.log</summary>
+
+<br>
+
+Logs information to the [console](<https://developer.mozilla.org/docs/Web/API/console/log_static>).
+
+Methods:
+
+- `log` - primary
+- `console.log`- alternative
+- ~~`sandboxConsole.log`~~ - deprecated
+
+```js
+log("hello, world")
+```
+
+```ts
+function log(...data: unknown[]): void
+```
+
+<details>
+<summary>A word about the console</summary>
+
+<br>
 
 > The console's output is **"different"** from the "adverage" JavaScript console.
 
@@ -256,33 +321,17 @@ foo.bar = undefined;
 console.log(foo.bar);
 ```
 
----
-
 **What is actually happening:**
 
 - When `console.log` is called or when the user inputs an action in an adventure, it is parsed through AI Dungeon's GraphQL.
 - AI Dungeon's GraphQL **always** returns a JSON type response, causing our input to be *stringify*.
-
----
-
-<details>
-  <summary>Visual Response</summary>
 
 <p>
   <img src="https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/assets/console-graphql.png">
   <img src="https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/assets/console-scripting.png">
 </p>
 
-</details>
-
----
-
 - Below is an example of what is happening behind the scenes.
-
----
-
-<details>
-  <summary>Example: console.log</summary>
 
 ```js
 // For a visual result;
@@ -302,168 +351,588 @@ console.log(JSON.stringify(output, null, ' '));
 
 </details>
 
-</details>
+<br>
 
 ---
 
-<details>
-  <summary>Functions</summary>
-
-Scripting API hooks have access to the following functions.
-
-<details>
-  <summary>log</summary>
-
-Work in progress.
-
 </details>
 
----
+<br>
 
 <details>
   <summary>addStoryCard</summary>
 
-Work in progress.
+<br>
+
+> **Bug**: *Can't manipulate StoryCards when "Memory Bank" is **off***
+
+Create a [StoryCard](<https://help.aidungeon.com/faq/story-cards>).
+
+Returns the new length of `storyCards` [array](<https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array>).
+
+If StoryCard already exists with same keys(`TRIGGERS`), returns `false`.
+
+Methods:
+
+- `addStoryCard` - primary
+- ~~`addWorldEntry`~~ - deprecated
+
+<details>
+<summary>Alternatives</summary>
+
+<br>
+
+*Assuming StoryCard does not exists.*
+
+```js
+const cardData = {
+  type: 'foo type',
+  title: 'foo title',
+  entry: 'foo entry',
+  keys: 'foo keys',
+  description: 'foo description'
+};
+
+// Use `Array.find()` to get element
+const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === cardData.entry && ty === cardData.type && k === cardData.keys && t === cardData.title);
+
+if (!card) {
+  // Generate id
+  cardData.id = Math.floor(Math.random() * 1000000000).toString();
+
+  // Use `Array.push()` to push element into `Array`
+  storyCards.push(cardData);
+}
+```
+
+---
 
 </details>
 
+<br>
+
+```js
+const numOfStoryCards = addStoryCard(keys, entry, type)
+```
+
+```ts
+/**
+ * @param keys - This will set StoryCard.keys and StoryCard.title
+ * @param entry - This will set StoryCard.entry
+ * @param type - This will set StoryCard.type
+ * @returns The new length of the storyCards array
+ */
+function addStoryCard<K extends string, E extends string, T extends string | 'Custom'>(
+  keys?: K,
+  entry?: E,
+  type?: T
+): number;
+```
+
+Example Usage:
+
+```js
+// Returns new length of the `storyCards` array.
+const Superman = addStoryCard("Superman", "a bird");
+// Output: 1
+log(Superman); // SCRIPT TEST Output: 2 - due to existing example StoryCard
+
+/**
+ * Get a StoryCard.
+ * If StoryCard does not exist, create it.
+ * @param keys - This will set StoryCard.keys and StoryCard.title
+ * @param entry - This will set StoryCard.entry
+ * @param type - This will set StoryCard.type
+ * @returns { index: number; card: StoryCard } - Object
+ */
+function getStoryCard(keys, entry, type = 'Custom') {
+  // Find Story Card based `keys`, `entry`, `type`
+  const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === entry && ty === type && (k === keys || t === keys));
+  // If `card` exists, return { index, card }
+  if (card) return { index: storyCards.indexOf(card), card };
+  // Otherwise, call `addStoryCard()` function and loop
+  addStoryCard(keys, entry, type);
+  return getStoryCard(keys, entry, type);
+};
+
+// Returns { index: StoryCard[keyof StoryCard], card: StoryCard }
+const Quack = getStoryCard("Quack", "a duck", "Animal");
+log(Quack.index); // Output: index of Quack
+log(Quack.card); // StoryCard of Quack
+```
+
 ---
+
+</details>
+
+<br>
 
 <details>
   <summary>removeStoryCard</summary>
 
-Work in progress.
+<br>
+
+> **Bug**: *Can't manipulate StoryCards when "Memory Bank" is **off***
+
+Remove a [StoryCard](<https://help.aidungeon.com/faq/story-cards>).
+
+If StoryCard does not exist, throws an [Error](<https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error/Error>).
+
+Methods:
+
+- `removeStoryCard` - primary
+- ~~`removeWorldEntry`~~ - deprecated
+
+<details>
+<summary>Alternatives</summary>
+
+<br>
+
+*Assuming StoryCard already exists.*
+
+```js
+const cardData = {
+  type: 'foo',
+  title: 'foo',
+  entry: 'foo',
+  keys: 'foo',
+  description: 'foo'
+};
+
+// Use `Array.findIndex()` to get index number
+const cardIndex = storyCards.findIndex(({keys: k, entry: e, title: t, type: ty}) => e === cardData.entry && ty === cardData.type && k === cardData.keys && t === cardData.title);
+
+// Then remove from `Array` using `Array.splice()`
+if (cardIndex > -1) storyCards.splice(cardIndex, 1);
+
+// Or use `Array.find()` to get element
+const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === cardData.entry && ty === cardData.type && k === cardData.keys && t === cardData.title);
+
+// Then remove from `Array` using `Array.splice()`
+if (card) storyCards.splice(storyCards.indexOf(card), 1);
+```
+
+---
 
 </details>
 
+<br>
+
+```js
+removeStoryCard(index)
+```
+
+```ts
+/**
+ * @param index - StoryCard index number
+ */
+function removeStoryCard<I extends string | number>(index: I): void;
+```
+
+Example Usage:
+
+```js
+/**
+ * Get a StoryCard.
+ * If StoryCard does not exist, create it.
+ * @param keys - This will set StoryCard.keys and StoryCard.title
+ * @param entry - This will set StoryCard.entry
+ * @param type - This will set StoryCard.type
+ * @returns { index: number; card: StoryCard } - Object
+ */
+function getStoryCard(keys, entry, type = 'Custom') {
+  // Find Story Card based `keys`, `entry`, `type`
+  const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === entry && ty === type && (k === keys || t === keys));
+  // If `card` exists, return { index, card }
+  if (card) return { index: storyCards.indexOf(card), card };
+  // Otherwise, call `addStoryCard()` function and loop
+  addStoryCard(keys, entry, type);
+  return getStoryCard(keys, entry, type);
+};
+
+const entry = "Eleanor Rigby";
+const keys = "A old British women from the Victorian era.";
+const type = "character";
+
+// Create `myCard`
+const myCard = getStoryCard(keys, entry, type);
+
+// Remove `myCard`
+removeStoryCard(myCard.index);
+```
+
 ---
+
+</details>
+
+<br>
 
 <details>
   <summary>updateStoryCard</summary>
 
-Work in progress.
+<br>
 
-</details>
+> **Bug**: *Can't manipulate StoryCards when "Memory Bank" is **off***
 
-</details>
+Update a [StoryCard](<https://help.aidungeon.com/faq/story-cards>).
+
+If StoryCard does not exist, throws an [Error](<https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error/Error>).
+
+Methods:
+
+- `updateStoryCard` - primary
+- ~~`updateWorldEntry`~~ - deprecated
+
+<details>
+<summary>Alternatives</summary>
+
+<br>
+
+*Assuming StoryCard already exists.*
+
+```js
+const cardData = {
+  type: 'foo type',
+  title: 'foo title',
+  entry: 'foo entry',
+  keys: 'foo keys',
+  description: 'foo description'
+};
+
+// Use `Array.find()` to get element
+const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === cardData.entry && ty === cardData.type && k === cardData.keys && t === cardData.title);
+
+if (card) {
+  const newCard = {
+    type: 'bar type',
+    title: 'bar title',
+    entry: 'bar entry',
+    keys: 'bar keys',
+    description: 'bar description'
+  };
+  card.type = newCard.type;
+  card.title = newCard.title;
+  card.entry = newCard.entry;
+  card.keys = newCard.keys;
+  card.description = newCard.description;
+}
+
+// Or use a loop method
+const newCard = {
+  type: 'bar type',
+  title: 'bar title',
+  entry: 'bar entry',
+  keys: 'bar keys',
+  description: 'bar description'
+};
+for (const card of storyCards) {
+  if (card.keys !== cardData.keys) continue;
+  card.type = newCard.type;
+  card.title = newCard.title;
+  card.entry = newCard.entry;
+  card.keys = newCard.keys;
+  card.description = newCard.description;
+}
+```
 
 ---
 
-<details>
-  <summary>Hooks</summary>
-
-The Scripting API consists of three lifecycle hooks.
-
-<details>
-  <summary>onInput</summary>
-
-Work in progress.
-
 </details>
+
+<br>
+
+```js
+updateStoryCard(index, keys, entry, type)
+```
+
+```ts
+/**
+ * @param index - StoryCard index number
+ * @param keys - StoryCard.keys
+ * @param entry - StoryCard.entry
+ * @param type - StoryCard.type
+ */
+function updateStoryCard<
+  I extends string | number,
+  K extends string,
+  E extends string,
+  T extends string
+>(index: I, keys: K, entry: E, type: T): void;
+```
+
+Example Usage:
+
+```js
+/**
+ * Get a StoryCard.
+ * If StoryCard does not exist, create it.
+ * @param keys - This will set StoryCard.keys and StoryCard.title
+ * @param entry - This will set StoryCard.entry
+ * @param type - This will set StoryCard.type
+ * @returns { index: number; card: StoryCard } - Object
+ */
+function getStoryCard(keys, entry, type = 'Custom') {
+  // Find Story Card based `keys`, `entry`, `type`
+  const card = storyCards.find(({keys: k, entry: e, title: t, type: ty}) => e === entry && ty === type && (k === keys || t === keys));
+  // If `card` exists, return { index, card }
+  if (card) return { index: storyCards.indexOf(card), card };
+  // Otherwise, call `addStoryCard()` function and loop
+  addStoryCard(keys, entry, type);
+  return getStoryCard(keys, entry, type);
+};
+
+let entry = "Eleanor Rigby";
+let keys = "A old British women from the Victorian era.";
+let type = "character";
+
+// Create `myCard`
+const myCard = getStoryCard(keys, entry, type);
+
+// Make changes
+entry = "Jude";
+keys = "A young boy from the Victorian era.";
+type = "Custom";
+
+// Update `myCard`
+updateStoryCard(myCard.index, keys, entry, type);
+```
 
 ---
 
-<details>
-  <summary>onModelContext</summary>
+</details>
 
-Work in progress.
+<br>
 
 </details>
+
+<br>
+
+<details>
+  <summary>Hooks / Scripts</summary>
+
+<br>
+
+The `Scripting API` consists of:
+
+- **three** lifecycle hooks: `onInput`, `onModelContext`, `onOutput`
+- **four** lifecycle scripts: `sharedLibrary`, `Input`, `Context`, `Output`.
+
+**Execution order:**
+
+- `onInput` > `sharedLibrary` > `Input`
+- `onModelContext` > `sharedLibrary` > `Context`
+- `onOutput` > `sharedLibrary` > `Output`
+
+<details>
+  <summary>Hook: onInput</summary>
+
+<br>
+
+The `onInput` hook executes the `sharedLibrary` script **then** the `Input` script.
+
+The `Input` script modifies user's input text(`> You say "..."`) before being passed into the `onModelContext` hook.
 
 ---
 
-<details>
-  <summary>onOutput</summary>
-
-Work in progress.
-
 </details>
+
+<br>
+
+<details>
+  <summary>Hook: onModelContext</summary>
+
+<br>
+
+The `onModelContext` hook executes the `sharedLibrary` script **then** the `Context` script.
+
+The `Context` script modifies the text(`World Lore: ... Recent Story: ... [Author's Note: ...] {onInput text}`) sent to the AI model before the model is called.
+
+**Context Layout:**
+
+```txt
+'your plot essentials'
+World Lore:
+'loaded story cards'
+
+Story Summary:
+'everything in summary'
+
+Memories:
+'All your story's memories'
+
+Recent Story:
+'All previous text in story'
+[Author's note: 'your author notes']
+'{onInput text} = The last thing AI responded with or your last action'
+'frontMemory'
+```
 
 ---
 
+</details>
+
+<br>
+
 <details>
-  <summary>sharedLibrary</summary>
+  <summary>Hook: onOutput</summary>
 
-Work in progress.
+<br>
 
-</details>
+The `onOutput` hook executes the `sharedLibrary` script **then** the `Output` script.
 
-</details>
+The output hook allows a script to modify the model’s output text before it is returned to the player.
 
 ---
+
+</details>
+
+<br>
+
+<details>
+  <summary>Script: sharedLibrary</summary>
+
+<br>
+
+The `sharedLibrary` script is excuted **after** a hook and **prior to** the `Input`, `Context`, and `Output` scripts.
+
+The `sharedLibrary` is the **first** script to be excuted in a lifecycle.
+
+The `sharedLibrary` script is **global** while lifecycle scripts **are not**.
+
+```js
+// Shared Library
+const secretNameOfTheKing = 'Bob';
+
+log(secretNameOfTheKing); // Output: Bob
+
+log(secretNameOfThePrince); // Throws an Error
+
+// Lifecycle Scripts
+const secretNameOfThePrince = 'Phillip';
+
+log(secretNameOfTheKing); // Output: Bob
+
+log(secretNameOfThePrince); // Output: Phillip
+```
+
+---
+
+</details>
+
+<br>
+
+</details>
+
+<br>
 
 <details>
   <summary>Params</summary>
+
+<br>
 
 Scripting API hooks have access to the following information. When referencing one of these params in a script, you can reference the name of the parameter directly—you do not need to deconstruct it from an object.
 
 <details>
   <summary>info</summary>
 
+<br>
+
 Work in progress.
+
+---
 
 </details>
 
----
+<br>
 
 <details>
   <summary>history</summary>
 
+<br>
+
 Work in progress.
+
+---
 
 </details>
 
----
+<br>
 
 <details>
   <summary>state</summary>
 
+<br>
+
 Work in progress.
+
+---
 
 </details>
 
----
+<br>
 
 <details>
   <summary>storyCards</summary>
 
+<br>
+
 Work in progress.
+
+---
 
 </details>
 
----
+<br>
 
 <details>
   <summary>text</summary>
 
+<br>
+
 Work in progress.
-
-</details>
-
-</details>
 
 ---
 
+</details>
+
+<br>
+
+</details>
+
+<br>
+
 <details>
   <summary>Return</summary>
+
+<br>
 
 Scripting API hooks can return the following values.
 
 <details>
   <summary>text</summary>
 
+<br>
+
 Work in progress.
+
+---
 
 </details>
 
----
+<br>
 
 <details>
   <summary>stop</summary>
 
+<br>
+
 Work in progress.
 
+---
+
 </details>
+
+<br>
 
 </details>
 
@@ -471,24 +940,114 @@ Work in progress.
 
 ## Scenario Scripts
 
-Example scripts and scripts you can add to your scenarios.
+Scripts you can add to your scenarios.
 
 <details>
-  <summary>Prevent the AI from generating a starting message</summary>
+  <summary>Scripts > Input</summary>
 
-Script section: `Scripts > Output`
+<br>
+
+<details>
+  <summary>Better Say Actions</summary>
+
+<br>
+
+> Written by `BinKompliziert` on Discord
+>
+> AI Dungeon Discord: [Thread](<https://discord.com/channels/903327676884979802/1285251044259139715/1372410212773793812>)
+
+**This Script does the following:**
+
+- Let's you type actions that accompany dialogue in the `Say` action without the need to type "" like you would need to in the `Do` action.
+- Let's you use other words than 'say' in the `Say` action.
+- Adds a `,` to every `Say` action, i.e. ` You say, "..."`
+- Fixes the typo of the `Say` action when using first person.
+
+**How it works:**
+In the `Say` action, anything written before a Trigger gets added onto the prefix of the dialogue and anything written after that Trigger is encapsulated into "" like a normal `Say` action. So an input of `whisper, hello` turns into `You whisper, "hello"` and an input of `walk up and shout, hello` turns into `You walk up and shout, "hello"`. If you want to use another Trigger than the ones listed below, you can instead use `,,` like this: `stand up and speak,, hello`, which turns into `You stand up and speak, "hello"`. If there is no Trigger, then it defaults to a normal `Say` action.
+
+**Triggers(Format as `Trigger`, `dialogue`):**
+say, exclaim, whisper, mutter, utter, shout, yell, scream, ask, answer, reply, respond, joke, lie;
+
+Third person versions of these Triggers also work.
+
+Empty Scenario that includes the Script: <https://play.aidungeon.com/scenario/2eiZnXnXXzwR/better-say-actions>
+
+**Import this into Input:**
 
 ```js
-// Example: message = '[Find a sword.]'
+const modifier = (text) => {
+  text.match(/".*,,/) ? text = text.replace(/says? "\s*(\S)(.*),,\s*(\S)/i, (m, a, b, c) => a.toLowerCase() + b.trim() + ', "' + c.toUpperCase()).replace(/(you |i )(your? |i )(\S)/i, (m, a, b, c) => b.charAt(0).toUpperCase() + b.slice(1) + c.toLowerCase()) : text = text.replace(/\bi says/i, 'I say').replace(/(says?) "\s*(\S)/i, (m, a, b) => a + ', "' + b.toUpperCase())
+  text.match(/[^.,?!]"\n/) ? text = text.replace(/\s*"\n/, '."\n') : text = text.replace(/(say)(s?, ".*)([,?!]")/i, (m, a, b, c) => (c == ',"' ? 'begin' : c == '?"' ? 'ask' : c == '!"' ? 'shout' : '') + b.trim() + c)
+  return { text }
+}
+```
+
+</details>
+
+---
+
+</details>
+
+<br>
+
+<details>
+<summary>Scripts > Output</summary>
+
+<br>
+
+<details>
+<summary>Prevent the AI from generating a starting message</summary>
+
+<br>
+
+```js
+// Example: startMessage = '[Find a sword.]'
 let startMessage = ''
 
 const modifier = (text) => {
-  return { text: info.actionCount ? text : ` ${typeof startMessage === 'string' ? startMessage : ''}` }
+return { text: info.actionCount ? text : ` ${typeof startMessage === 'string' ? startMessage : ''}` }
+}
+```
+
+<details>
+<summary>Alternative</summary>
+
+<br>
+
+> Written by `burnout` on Discord
+>
+> AI Dungeon Discord: [Thread](<https://discord.com/channels/903327676884979802/1266211110919344138/1266211110919344138>)
+
+*In the output script section, replace all the text with this modifier script, or adapt it to fit your current scripts:*
+
+```js
+const modifier = (text) => {
+  if (info.actionCount === 0)
+    return { text: " [Place some instruction here for your users if you want them to edit this message.]"}
+  return { text }
+}
+
+modifier(text)
+```
+
+*Alternatively, you can suppress it entirely with a single space. Do not return an empty string: this will prevent the opening from loading correctly!*
+
+```js
+const modifier = (text) => {
+  if (info.actionCount === 0)
+    return { text: " "}
+  return { text }
 }
 
 modifier(text)
 ```
 
 </details>
+</details>
 
 ---
+
+</details>
+
+<br>
