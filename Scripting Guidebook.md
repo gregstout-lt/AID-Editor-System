@@ -5,12 +5,14 @@
 Magic's Scripting Guidebook
 </h1>
 
-Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidungeon.com>) code editor.
+Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidungeon.com>) Scenario editor.
 
 **Things to keep in-mind:**
 
-- `AI Dungeon's code editor = Monaco = VSCode / Visual Studio Code`
-- `Scripting API = Scripting environment in the Scenario editor`
+- `Scenario editor` = AI Dungeon's code editor
+- `Scripting API` = Virtual JavaScript environment for AI Dungeon, *use Scenario editor to access*
+- `JS` = `JavaScript` abbreviation
+- `TS` = `TypeScript` abbreviation
 
 ## **External Links**
 
@@ -18,7 +20,7 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
 >
 > **READ THE GUIDES!**
 >
-> Even if you know JavaScript or TypeScript, there may be something you *didn't know!*
+> Even if you understand *JavaScript* or *TypeScript*, there could be something in here you *didn't know!*
 
 <details>
   <summary>✨Secrets to great code✨</summary>
@@ -33,11 +35,21 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
 - **ALWAYS** parse your code through a code linter (eslint, jshint, etc.)
   - Recommend using a [local](<https://eslint.org>) linter but [online](<https://eslint.org/play>) works too.
 
+**When you:**
+
+- **Do not** understand how to tackle a problem use: `Google`, `Bing`, `StackOverflow`, `Discord`, etc.
+  - It's the internet, **use it**
+
 ---
 
 </details>
 
 <br>
+
+**Things to keep in-mind:**
+
+- `⭐` = Recommened browsing through **first**
+- `📖`  = Available online for *free* and available for *purchase*
 
 **⭐Guides:**
 
@@ -46,16 +58,39 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
   - ⭐[What are Scripts and how do you Install them?](<https://help.aidungeon.com/what-are-scripts-and-how-do-you-install-them>)
 - JavaScript:
   - ⭐[JavaScript Guide | MDN](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide>)
+    - *Mozilla web docs is my favorite go to place*
+    - Great for beginners and quick references
   - ⭐[Airbnb JavaScript Style Guide | GitHub](<https://github.com/airbnb/javascript/blob/master/README.md#airbnb-javascript-style-guide->)
-  - [You Don't Know JS Yet (book series) - 2nd Edition | GitHub](<https://github.com/getify/You-Dont-Know-JS>)
-  - [The Modern JavaScript Tutorial | javascript.info](<https://javascript.info/>)
+    - *It's written by the actual Airbnb company*
+    - Great for avoiding bad habits and improving your code
+  - [JavaScript Tutorial | w3schools](<https://www.w3schools.com/js>)
+  - 📖Books:
+    - 📖[You Don't Know JS Yet (book series) - 2nd Edition | GitHub](<https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/README.md>)
+      - *So useful I bought my own copy*
+      - Great for beginners who perfer reading digital / physical books
+    - 📖[The Modern JavaScript Tutorial | javascript.info](<https://javascript.info/>)
+      - *Community written JS book, so useful I bought my own copy*
+      - Great for all levels of JS knowledge
+    - 📖[Exploring JavaScript (ES2025 Edition) | exploringjs](<https://exploringjs.com/js/book/index.html>)
+    - 📖[Deep JavaScript | exploringjs](<https://exploringjs.com/deep-js/toc.html>)
 - TypeScript:
-  - [TypeScript Handbook | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro.html>)
+  - ⭐[TypeScript Handbook | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro.html>)
+  - [TypeScript Tutorial | w3schools](<https://www.w3schools.com/typescript>)
+  - [Exploring TypeScript | exploringjs](<https://exploringjs.com/ts/book/index.html>)
+  - Videos:
+    - [Learn TypeScript - Full Course for Beginners | YouTube](<https://youtu.be/SpwzRDUQ1GI>)
+    - Channels:
+      - [Matt Pocock | YouTube](<https://www.youtube.com/@mattpocockuk/videos>)
 
 **General:**
 
-- [Monaco - The Editor of the Web](<https://microsoft.github.io/monaco-editor>)
+- ⭐[VSCodium](<https://github.com/VSCodium/vscodium/releases>) - [🏠](<https://vscodium.com>)
+  - *Local code editor, fork of Visual Studio Code*
 - [Visual Studio Code - The open source AI code editor](<https://code.visualstudio.com>)
+  - *Local code editor made by Microsoft*
+- [Monaco - The Editor of the Web](<https://microsoft.github.io/monaco-editor>)
+  - *Base engine that powers Visual Studio Code*
+  - *Scenario editor uses [v0.43.0](<https://github.com/microsoft/monaco-editor/tree/v0.43.0>)*
 
 **VSCode:**
 
@@ -64,201 +99,36 @@ Collection of tips & tricks + improvements for [AI Dungeon's](<https://www.aidun
 - [Code Navigation | VSCode](<https://code.visualstudio.com/docs/editing/editingevolved>)
 - [Working with JavaScript | VSCode](<https://code.visualstudio.com/docs/nodejs/working-with-javascript>)
 - [Glob Patterns Reference | VSCode](<https://code.visualstudio.com/docs/editor/glob-patterns>)
-- Local Code Editor:
-  - Downloads:
-    - ⭐[VSCodium](<https://github.com/VSCodium/vscodium/releases>) - [🏠](<https://vscodium.com>)
-    - [VSCode](<https://code.visualstudio.com/Download>)
-  - Extensions (Ctrl + Shift + X):
-    - ⭐[ESLint](<https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint>) - [🏠](<https://eslint.org>)
-    - ⭐[Local History](<https://marketplace.visualstudio.com/items?itemName=xyz.local-history>) - [🏠](<https://github.com/zabel-xyz/local-history>)
-    - ⭐[Region Viewer](<https://marketplace.visualstudio.com/items?itemName=SantaCodes.santacodes-region-viewer>) - [🏠](<https://github.com/berabue/vscode-region-viewer>)
-    - [EditorConfig for VS Code](<https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig>) - [🏠](<https://editorconfig.org>)
-    - [Prettier - Code formatter](<https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>) - [🏠](<https://prettier.io>)
+- Extensions (Ctrl + Shift + X):
+  - ⭐[ESLint](<https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint>) - [🏠](<https://eslint.org>)
+  - ⭐[Local History](<https://marketplace.visualstudio.com/items?itemName=xyz.local-history>) - [🏠](<https://github.com/zabel-xyz/local-history>)
+  - ⭐[Region Viewer](<https://marketplace.visualstudio.com/items?itemName=SantaCodes.santacodes-region-viewer>) - [🏠](<https://github.com/berabue/vscode-region-viewer>)
+  - [EditorConfig for VS Code](<https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig>) - [🏠](<https://editorconfig.org>)
+  - [Prettier - Code formatter](<https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>) - [🏠](<https://prettier.io>)
 
 **JavaScript:**
 
 - General:
   - ⭐[JavaScript | MDN](<https://developer.mozilla.org/en-US/docs/Web/JavaScript>)
+    - *Mozilla web docs is my favorite go to place*
   - ⭐[Favorite single line of code | 1loc](<https://github.com/phuocng/1loc>) / [Wayback Machine](<https://web.archive.org/web/20250419154835/https://phuoc.ng/collection/1-loc/>)
+    - *Most useful utility functions*
 - Videos:
   - ⭐[JS Destructuring in 100 Seconds | YouTube](<https://youtu.be/UgEaJBz3bjY>)
+    - *Great video by Fireship*
   - ⭐[JavaScript Visualized - Event Loop, Web APIs, (Micro)task Queue | YouTube](<https://youtu.be/eiC58R16hb8>)
+    - *BEST video by Lydia Hallie on visualizing JS*
 
 **TypeScript:**
 
 - General:
   - ⭐[@use JSDoc | JSDoc](<https://jsdoc.app/>)
+    - *Do this to keep track of your code!*
+    - Type `/**` then hit Enter in your code editor
   - ⭐[JS Projects Utilizing TypeScript | TypeScript](<https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html>)
+    - *Add `//@ts-check` to the top of your code, works in Scenario editor*
   - ⭐[Type Checking JavaScript Files | TypeScript](<https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html>)
   - [Triple-Slash Directives | TypeScript](<https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html>)
-
----
-
-## Types for Scripting API
-
-AI Dungeon's code editor <ins>does not</ins> include typings for `Scripting API`.
-
-Follow these instructions below:
-
-- **AI Dungeon:**
-  - *The only difference between **SharedLibraryTypes.js** and **ScriptingTypes.js** is `ScriptingTypes.js` adds typings for the `modifier` function.*
-  - Shared Library:
-    - Copy everything within [SharedLibraryTypes.js](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/SharedLibraryTypes.js>).
-    - Paste into the top of your `Shared Library > Library` script.
-  - Scripts:
-    - Copy everything within [ScriptingTypes.js](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/ScriptingTypes.js>).
-    - Paste into the top of your `Scripts > Input | Context | Output` script sections.
-
-<details>
-  <summary>Example Layout</summary>
-
-<br>
-
-Shared Library:
-
-```js
-// #region "Shared Library" Typings
-
-// Big loooooong list
-
-// #endregion
-
-// Your library scripts
-// ...
-```
-
-Scripts:
-
-```js
-// #region "Scripts" Typings
-
-// Big loooooong list
-
-// #endregion
-
-// Checkout the Guidebook examples to get an idea of other ways you can use scripting
-// https://help.aidungeon.com/scripting
-
-// Every script needs a modifier function
-const modifier = (text) => {
-  return { text }
-}
-
-// Don't modify this part
-modifier(text)
-```
-
----
-
-</details>
-
-<br>
-
-- **Local Code Editor:**
-  - *You may use the same method instructed **above**.*
-  - Or, save [SharedLibraryTypes.d.ts](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/SharedLibraryTypes.d.ts>) + [ScriptingTypes.d.ts](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/ScriptingTypes.d.ts>) as local files into your workspace.
-  - Add `/// <reference types="${relative path}/SharedLibraryTypes.d.ts"/>` to the top of your file if it is a `Library` script.
-  - Add `/// <reference types="${relative path}/ScriptingTypes.d.ts"/>` to the top of your file if it is a `Input | Context | Output` script.
-
-<details>
-  <summary>Example Workspace</summary>
-
-<br>
-
-Workspace:
-
-```bash
-My-Workspace-Folder
-├───src
-│       context.js
-│       input.js
-│       library.js
-│       output.js
-│
-└───types
-        ScriptingTypes.d.ts
-        SharedLibraryTypes.d.ts
-```
-
-library.js:
-
-```js
-/// <reference types="../types/SharedLibraryTypes.d.ts"/>
-
-log(info.actionCount); // Hover over to test
-```
-
-context.js:
-
-```js
-/// <reference types="../types/ScriptingTypes.d.ts"/>
-
-log(info.actionCount); // Hover over to test
-
-// Every script needs a modifier function
-const modifier = (text) => {
-  return { text }
-}
-
-// Don't modify this part
-modifier(text)
-```
-
-</details>
-
----
-
-## Fix Type References for Scripting API
-
-> Not needed when [Types for Scripting API](#types-for-scripting-api) is already setup!
-
-AI Dungeon's code editor types are <ins>not configured</ins> properly.
-
-For example, DOM types (`window`, `setTimout`, etc.) exist within the editor but **not** in `Scripting API`.
-
-Follow these instructions below:
-
-- **AI Dungeon:**
-  - Copy + Paste `Reference Code` into the top of your `Shared Library > Library` AND `Scripts > Input | Context | Output` script sections.
-- **Local Code Editor:**
-  - *Use the same method instructed **above** into each file.*
-
-<details>
-  <summary>Reference Code</summary>
-
-<br>
-
-```ts
-/// <reference no-default-lib="true"/>
-/// <reference lib="es2022"/>
-```
-
----
-
-</details>
-
-<details>
-  <summary>Example Layout</summary>
-
-<br>
-
-```js
-/// <reference no-default-lib="true"/>
-/// <reference lib="es2022"/>
-
-// Checkout the Guidebook examples to get an idea of other ways you can use scripting
-// https://help.aidungeon.com/scripting
-
-// Any functions or variables you define here will be available in your other modifier scripts.
-
-const secretNameOfTheKing = "Bob"
-
-function getKingName() {
-  return secretNameOfTheKing
-}
-```
-
-</details>
 
 ---
 
@@ -750,21 +620,67 @@ The `Context` script modifies the text(`World Lore: ... Recent Story: ... [Autho
 **Context Layout:**
 
 ```txt
-'your plot essentials'
-World Lore:
-'loaded story cards'
+"AI Instructions"
 
-Story Summary:
-'everything in summary'
+"Plot Essentials"
 
-Memories:
-'All your story's memories'
+World Lore: "Triggered story cards"
 
-Recent Story:
-'All previous text in story'
-[Author's note: 'your author notes']
-'{onInput text} = The last thing AI responded with or your last action'
-'frontMemory'
+Story Summary: "The story so far"
+
+Memories: "Memorized story moments"
+
+Recent Story: "All previous text in story"
+
+[Author's note: "Influence AI's writing style"]
+
+"AI's last response or your last action"
+
+"frontMemory"
+```
+
+**Available Scripting Context:**
+
+```txt
+"Plot Essentials"
+
+World Lore: "Triggered story cards"
+
+Story Summary: "The story so far"
+
+Memories: "Memorized story moments"
+
+Recent Story: "All previous text in story"
+
+[Author's note: "Influence AI's writing style"]
+
+"AI's last response or your last action"
+```
+
+Example Usage:
+
+```js
+// Custom Continue
+
+// { Scripts > Context }
+
+const prompt = 'Please continue from your last response';
+
+const continueInstructions = `\n<SYSTEM>\n${prompt}\n</SYSTEM>`;
+
+const modifier = () => {
+  return { text: history.at(-1)?.type === 'continue' ? /> [A-Z]/.test(text.split('\n').filter((t) => t.trim() !== '').at(-1) || '') ? '' : continueInstructions : '' }
+}
+
+void 0
+
+/*
+Output:
+...Scripting Context
+<SYSTEM>
+Please continue from your last response
+</SYSTEM>
+*/
 ```
 
 ---
@@ -943,6 +859,129 @@ Work in progress.
 Scripts you can add to your scenarios.
 
 <details>
+  <summary>Shared Library > Library</summary>
+
+<br>
+
+<details>
+  <summary>Director</summary>
+
+<br>
+
+Director is an "easier" way to execute functions, scripts, and hooks within your AI Dungeon scripting scenarios.
+
+Director executes provided `modifier` functions in a *chain* (`FuncA => FuncB => etc.`). The return value(s) are then *passed down* to the next function.
+
+[Source code](<https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/scripting/director.js>)
+
+[More information](<https://github.com/magicoflolis/aidungeon.js/blob/main/scripting/director.md>)
+
+*Example Usage:*
+
+```js
+// { Scripts > Input }
+
+const fn = (text) => {
+  text = 'My example.';
+  return { text };
+};
+const fnA = (text) => {
+  text += ' function A.';
+  return { text };
+};
+const fnB = (text) => {
+  text += ' function B.';
+  return { text };
+};
+const fnC = (text) => {
+  text += ' function C.';
+  return { text };
+};
+
+// Output: "My example. function A. function B. function C."
+director.input(fnA, fnB, fnC);
+
+// Alternatives
+
+/*
+load('input', fnA, fnB, fnC);
+
+director.load('input', fnA, fnB, fnC);
+
+director.onInput(fnA, fnB, fnC);
+*/
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+```
+
+*Setup:*
+
+`Scripts > Input`
+
+```js
+const fn = (text) => {
+  return { text };
+};
+
+director.input(fn); // `onInput` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+
+// Alternative
+
+/*
+// Surround `modifier()` in curly brackets `{ }`
+{
+  const modifier = (text) => {
+    return { text }
+  }
+
+  // Replace `modifier(text)` line
+  director.input(modifier)
+}
+*/
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+```
+
+`Scripts > Context`
+
+```js
+const fn = (text) => {
+  return { text };
+};
+
+director.context(fn); // `onModelContext` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+```
+
+`Scripts > Output`
+
+```js
+const fn = (text) => {
+  return { text };
+};
+
+director.output(fn); // `onOutput` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+```
+
+</details>
+
+---
+
+</details>
+
+<br>
+
+<details>
   <summary>Scripts > Input</summary>
 
 <br>
@@ -954,7 +993,7 @@ Scripts you can add to your scenarios.
 
 > Written by `BinKompliziert` on Discord
 >
-> AI Dungeon Discord: [Thread](<https://discord.com/channels/903327676884979802/1285251044259139715/1372410212773793812>)
+> AI Dungeon Discord: [Thread](<https://discord.com/channels/903327676884979802/1381678302238081158/1381678302238081158>)
 
 **This Script does the following:**
 
@@ -982,6 +1021,38 @@ const modifier = (text) => {
   return { text }
 }
 ```
+
+</details>
+
+---
+
+</details>
+
+<br>
+
+<details>
+  <summary>Scripts > Context</summary>
+
+<br>
+
+<details>
+  <summary>Custom Continue</summary>
+
+<br>
+
+```js
+const prompt = 'Please continue from your last response';
+
+const continueInstructions = `\n<SYSTEM>\n${prompt}\n</SYSTEM>`;
+
+const modifier = () => {
+  return { text: history.at(-1)?.type === 'continue' ? /> [A-Z]/.test(text.split(/\n/).filter((t) => t.trim() !== '').at(-1) || '') ? '' : continueInstructions : '' }
+}
+
+void 0
+```
+
+<br>
 
 </details>
 
@@ -1046,8 +1117,135 @@ modifier(text)
 </details>
 </details>
 
----
+<br>
 
 </details>
 
-<br>
+---
+
+## Types for Scripting API
+
+AI Dungeon's code editor <ins>does not</ins> include typings for `Scripting API`.
+
+Follow these instructions below:
+
+- **AI Dungeon:**
+  - *The only difference between **SharedLibraryTypes.js** and **ScriptingTypes.js** is `ScriptingTypes.js` adds typings for the `modifier` function.*
+  - Shared Library:
+    - Copy everything within [SharedLibraryTypes.js](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/SharedLibraryTypes.js>).
+    - Paste into the top of your `Shared Library > Library` script.
+  - Scripts:
+    - Copy everything within [ScriptingTypes.js](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/ScriptingTypes.js>).
+    - Paste into the top of your `Scripts > Input | Context | Output` script sections.
+
+Shared Library:
+
+```js
+// #region "Shared Library" Typings
+
+// Big loooooong list
+
+// #endregion
+
+// { Shared Library Code }
+```
+
+Scripts:
+
+```js
+// #region "Scripts" Typings
+
+// Big loooooong list
+
+// #endregion
+
+// { Scripts Code ( `const modifier = (text) => {...}` ) }
+```
+
+- **Local Code Editor:**
+  - *You may use the same method instructed **above**.*
+  - Or, save [SharedLibraryTypes.d.ts](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/SharedLibraryTypes.d.ts>) + [ScriptingTypes.d.ts](<https://github.com/magicoflolis/aidungeon.js/blob/main/types/ScriptingTypes.d.ts>) as local files into your workspace.
+  - Add `/// <reference types="${relative path}/SharedLibraryTypes.d.ts"/>` to the top of your file if it is a `Library` script.
+  - Add `/// <reference types="${relative path}/ScriptingTypes.d.ts"/>` to the top of your file if it is a `Input | Context | Output` script.
+
+Workspace:
+
+```bash
+My-Workspace-Folder
+├───src
+│       context.js
+│       input.js
+│       library.js
+│       output.js
+│
+└───types
+        ScriptingTypes.d.ts
+        SharedLibraryTypes.d.ts
+```
+
+library.js:
+
+```js
+/// <reference types="../types/SharedLibraryTypes.d.ts"/>
+
+log(info.actionCount); // Hover over to test
+
+// { Shared Library Code }
+```
+
+context.js:
+
+```js
+/// <reference types="../types/ScriptingTypes.d.ts"/>
+
+log(info.actionCount); // Hover over to test
+
+// { Scripts Code ( `const modifier = (text) => {...}` ) }
+```
+
+---
+
+## Fix Type References for Scripting API
+
+> Not needed when [Types for Scripting API](#types-for-scripting-api) is already setup!
+
+AI Dungeon's code editor types are <ins>not configured</ins> properly.
+
+For example, DOM types (`window`, `setTimout`, etc.) exist within the editor but **not** in `Scripting API`.
+
+`Reference Code`:
+
+```ts
+/// <reference no-default-lib="true"/>
+/// <reference lib="es2022"/>
+```
+
+Follow instructions below:
+
+- **AI Dungeon:**
+  - Copy + Paste `Reference Code` into the top of your `Shared Library > Library` AND `Scripts > Input | Context | Output` script sections.
+- **Local Code Editor:**
+  - *Use the same method instructed **above** into each file.*
+
+*Before:*
+
+```js
+// Output: function setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number
+log(setTimeout); // Hover over to test
+
+// { Your Code Here }
+```
+
+*After:*
+
+```js
+/// <reference no-default-lib="true"/>
+/// <reference lib="es2022"/>
+
+// Output: any
+log(setTimeout); // Hover over to test
+
+// { Your Code Here }
+```
+
+---
