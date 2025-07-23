@@ -4,11 +4,10 @@ Director is an "easier" way to execute functions, scripts, and hooks within your
 
 Director executes provided `modifier` functions in a _chain_ (`FuncA => FuncB => etc.`). The return value(s) are then _passed down_ to the next function.
 
-<details>
-  <summary>Code Example</summary>
+_Example Usage:_
 
 ```js
-// `onInput` hook
+// { Scripts > Input }
 
 const fn = (text) => {
   text = 'My example.';
@@ -27,18 +26,22 @@ const fnC = (text) => {
   return { text };
 };
 
+// Output: "My example. function A. function B. function C."
 director.input(fnA, fnB, fnC);
 
-// Output: "My example. function A. function B. function C."
+// Alternatives
 
-// Alternative(s)
+/*
+load('input', fnA, fnB, fnC);
 
-// load('input', fnA, fnB, fnC);
-// director.load('input', fnA, fnB, fnC);
-// director.onInput(fnA, fnB, fnC);
+director.load('input', fnA, fnB, fnC);
+
+director.onInput(fnA, fnB, fnC);
+*/
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
 ```
-
-</details>
 
 ---
 
@@ -46,17 +49,19 @@ director.input(fnA, fnB, fnC);
 
 > For scenario creators, recommend using my "[Types for Scripting API](<https://github.com/magicoflolis/aidungeon.js/blob/main/Scripting%20Guidebook.md#types-for-scripting-api>)" along side.
 
-<details>
-  <summary>Shared Library</summary>
+Copy and paste [Source code](<https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/scripting/director.js>) into `Shared Library > Library`.
 
-- Location: `Shared Library > Library`
-- Code: [director.js](<https://raw.githubusercontent.com/magicoflolis/aidungeon.js/refs/heads/main/scripting/director.js>)
-  - _Copy and paste Code into Location._
-
-<details>
-  <summary>Example Usage</summary>
+_Example Usage:_
 
 ```js
+// { Shared Library > Library }
+
+//#region Director
+
+// { Director source code }
+
+//#endregion
+
 const stateA = () => {
   state.fooA = 'barA'
 };
@@ -69,40 +74,37 @@ const stateC = () => {
 
 director.library(stateA, stateB, stateC);
 
+/*
 // Equivalent to
-
-const stateA = () => {
-  state.fooA = 'barA'
-};
-const stateB = () => {
-  state.fooB = 'barB'
-};
-const stateC = () => {
-  state.fooC = 'barC'
-};
 
 stateA();
 stateB();
 stateC();
+*/
+
+// Output: state: { "fooA": "barA", "fooB": "barB", "fooC": "barC", ... }
+log(state);
+
+// Output: "barA"
+log(state.fooA);
+
+// Output: "barB"
+log(state.fooB);
+
+// Output: "barC"
+log(state.fooC);
 ```
 
-</details>
+**Hooks (Input/Context/Output):**
 
-</details>
+> [!IMPORTANT]
+> Ensure `void 0` is **ALWAYS** present at the bottom of your hooks! _Or just add `//` as the last line.
+>
+> Remove/rename your `modifier` function! _Example: `const modifier` => `const fn`_
+>
+> Remove/replace all `modifier(text)` lines.
 
-<details>
-  <summary>Hooks (Input/Context/Output)</summary>
-
-- **IMPORTANT!**
-- Ensure `void 0` is **ALWAYS** present at the bottom of your hooks! _Or just add `//` as the last line._
-- Remove/rename your `modifier` function!
-  - Example: `const modifier` => `const fn`
-- Remove any `modifier(text)` lines
-
-<details>
-  <summary>Code Examples</summary>
-
-Primary:
+`Scripts > Input`
 
 ```js
 const fn = (text) => {
@@ -111,40 +113,55 @@ const fn = (text) => {
 
 director.input(fn); // `onInput` hook
 
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+
+/*
+// Alternative
+
+// Surround `modifier()` in curly brackets `{ }`
+{
+  const modifier = (text) => {
+    return { text }
+  }
+
+  // Replace `modifier(text)` line
+  director.input(modifier)
+}
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+*/
+```
+
+`Scripts > Context`
+
+```js
+const fn = (text) => {
+  return { text };
+};
+
 director.context(fn); // `onModelContext` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+```
+
+`Scripts > Output`
+
+```js
+const fn = (text) => {
+  return { text };
+};
 
 director.output(fn); // `onOutput` hook
 
+// Always add `void 0` to the bottom of Scripts > *
 void 0
 ```
-
-Alternative:
-
-```js
-// Wrap entire "modifier()" inside `{ }`
-
-{
-  const modifier = (text) => {
-    return { text };
-  };
-
-  // Replace the "modifier(text)" line
-  director.input(modifier);
-}
-
-void 0
-```
-
-</details>
-
-</details>
 
 ---
 
 ## API & Usages
-
-<details>
-  <summary>API</summary>
 
 <details>
   <summary>Modifier Functions</summary>
@@ -171,13 +188,17 @@ const fn = function (text, stop, type) {
 }
 ```
 
+---
+
 </details>
+
+<br>
 
 <details>
   <summary>Parameter: Strings</summary>
 
 ```js
-// `onOutput` hook
+// { Scripts > Output }
 
 const fn = () => 'My character will ';
 const fnStr = '(text) => { return { text: "Draw a card " } }';
@@ -186,66 +207,189 @@ const myFunction = (text) => {
   return { text };
 };
 
-director.output(fn, fnStr, myFunction.toString());
-
 // Output: "My character will draw a card then pause the story."
+director.output(fn, fnStr, myFunction.toString());
 
 void 0
 ```
 
+---
+
 </details>
 
+<br>
+
 <details>
-  <summary>Return: Arrays</summary>
+  <summary>Return: Array[]</summary>
 
 ```js
-// `onModelContext` hook
+// { Scripts > Context }
 
 const arr = () => {
   return ['My text.', true];
 };
 
-director.context(arr);
-
 // Output: "stop" & stop = true
+director.context(arr);
 
 void 0
 ```
 
-</details>
-
 ---
 
 </details>
+
+<br>
 
 <details>
   <summary>AutoCards</summary>
 
 _Yes it works with AutoCards._
 
-```js
-// Shared Library
+`Shared Library > Library`
 
+```js
 //#region Director
-// ...
+
+// { Director source code }
+
 //#endregion
 
-// Replace "AutoCards(null);" line with "director.library(AutoCards);"
-function AutoCards() {} director.library(AutoCards); // ...
+/** Replace `AutoCards(null);` line with `director.library(AutoCards);` */
+function AutoCards() {} director.library(AutoCards);
 
-// `onInput` hook
+/** Add the rest of your library functions if any */
+const libFn = () => {
+  // Some other library function
+}
+director.library(libFn);
+```
+
+`Scripts > Input`
+
+```js
+/*
+// Minimal
 
 director.input(AutoCards);
 
-// `onModelContext` hook
+void 0
+*/
+
+const fn = (text) => {
+  // { your modifier code }
+  return { text };
+};
+
+director.input(AutoCards, fn); // `onInput` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+
+/*
+// Alternative
+
+// Surround `modifier()` in curly brackets `{ }`
+{
+  const modifier = (text) => {
+    text = AutoCards("input", text)
+    // { your modifier code }
+    return { text }
+  }
+
+  // Replace `modifier(text)` line
+  director.input(modifier)
+}
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+*/
+```
+
+`Scripts > Context`
+
+```js
+/*
+// Minimal
 
 director.context(AutoCards);
 
-// `onOutput` hook
+void 0
+*/
+
+const fn = (text) => {
+  // { your modifier code }
+  return { text };
+};
+
+director.context(AutoCards, fn); // `onModelContext` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+
+/*
+// Alternative
+
+// Surround `modifier()` in curly brackets `{ }`
+{
+  const modifier = (text) => {
+    [text, stop] = AutoCards("context", text, stop)
+    // { your modifier code }
+    return { text, stop }
+  }
+
+  // Replace `modifier(text)` line
+  director.context(modifier)
+}
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+*/
+```
+
+`Scripts > Output`
+
+```js
+/*
+// Minimal
 
 director.output(AutoCards);
+
+void 0
+*/
+
+const fn = (text) => {
+  // { your modifier code }
+  return { text };
+};
+
+director.output(AutoCards, fn); // `onOutput` hook
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+
+/*
+// Alternative
+
+// Surround `modifier()` in curly brackets `{ }`
+{
+  const modifier = (text) => {
+    text = AutoCards("output", text)
+    // { your modifier code }
+    return { text, stop }
+  }
+
+  // Replace `modifier(text)` line
+  director.output(modifier)
+}
+
+// Always add `void 0` to the bottom of Scripts > *
+void 0
+*/
 ```
+
+---
 
 </details>
 
----
+<br>
