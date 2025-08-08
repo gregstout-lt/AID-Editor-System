@@ -148,12 +148,16 @@ if (!globalThis.addStoryCard) {
    * @template {string} K
    * @template {string} E
    * @template {string} T
-   * @param {K} keys - This will set `StoryCard.keys` __and__ `StoryCard.title`.
-   * @param {E} entry - This will set `StoryCard.entry`.
+   * @template {K} Title
+   * @template {string} D
+   * @param {K} [keys] - This will set `StoryCard.keys` __and__ `StoryCard.title` if undefined.
+   * @param {E} [entry] - This will set `StoryCard.entry`.
    * @param {T} [type='Custom'] - This will set `StoryCard.type`.
+   * @param {Title} [title] - This will set `StoryCard.title`.
+   * @param {D} [description] - This will set `StoryCard.description`.
    * @returns {number} The new length of the storyCards array.
    */
-  globalThis.addStoryCard = (keys, entry, type) => {};
+  globalThis.addStoryCard = (keys, entry, type, title, description) => {};
 }
 if (!globalThis.updateStoryCard) {
   /**

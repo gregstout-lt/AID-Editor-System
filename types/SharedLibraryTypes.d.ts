@@ -33,15 +33,18 @@ declare global {
      * - `story` - a story action submitted by a player
      * - `see` - a see action submitted by a player
      */
-    type: 'continue' | 'say' | 'do' | 'story' | 'see' | 'repeat' | 'start' | 'unknown';
+    type: 'start' | 'continue' | 'do' | 'say' | 'story' | 'see' | 'repeat' | 'unknown';
     /**
-     * the same as text, deprecated and included for backwards compatibility.
+     * @deprecated use {@link History.text} instead.
      */
-    rawText: History['text'];
+    rawText?: string;
   }
   interface StoryCard {
     /**
-     * Usually a number represented as a string.
+     * Usually a number represented as a string:
+     * - `"1" === 1` => **false**
+     * - `"1" === "1"` => **true**
+     * - `Number("1") === 1` => **true**
      */
     id: string;
     /**
@@ -55,7 +58,7 @@ declare global {
     /**
      * This is `TYPE` in `DETAILS` section of a story card.
      */
-    type?: string;
+    type: string;
     /**
      * This is `value` when exported through `Story Card Management`.
      */
@@ -63,7 +66,7 @@ declare global {
     /**
      * This is `NOTES` in `DETAILS` section of a story card.
      */
-    description?: string;
+    description: string;
     /**
      * Defined after creating a StoryCard using {@link addStoryCard}.
      */
@@ -158,15 +161,19 @@ declare global {
    * ---
    *
    * @global
-   * @param keys - This will set {@link StoryCard.keys} __and__ {@link StoryCard.title}.
+   * @param keys - This will set {@link StoryCard.keys} __and__ {@link StoryCard.title} if undefined.
    * @param entry - This will set {@link StoryCard.entry}.
    * @param type - This will set {@link StoryCard.type}.
+   * @param title - This will set {@link StoryCard.title}.
+   * @param description - This will set {@link StoryCard.description}.
    * @returns The new length of the {@link storyCards} array.
    */
-  function addStoryCard<K extends string, E extends string, T extends string | 'Custom'>(
+  function addStoryCard<K extends string, E extends string, T extends string | 'Custom', Title extends K, D extends string>(
     keys?: K,
     entry?: E,
-    type?: T
+    type?: T,
+    title?: Title,
+    description?: D
   ): number;
   /**
    * @deprecated use {@link addStoryCard} instead.
@@ -284,17 +291,17 @@ declare global {
    *
    * @global
    */
-  const history: History[];
+  let history: History[];
   /**
    * `storyCards` is an array of [story cards](https://help.aidungeon.com/faq/story-cards) from the adventure, see {@link StoryCard}.
    *
    * @global
    */
-  const storyCards: StoryCard[];
+  let storyCards: StoryCard[];
   /**
    * @deprecated use {@link storyCards} instead.
    */
-  const worldInfo: StoryCard[];
+  let worldInfo: StoryCard[];
   /**
    * This field is an object where scripts can store additional persistent information to be available across turns. Beyond being an object, this field can have any structure needed for the script.
    *
@@ -304,13 +311,13 @@ declare global {
    *
    * @global
    */
-  const state: State & { [key: string]: unknown };
+  let state: State & { [key: string]: unknown };
   /**
    * This is **user**-defined memory, {@link state.memory} has priority
    *
    * @global
    */
-  const memory: {
+  let memory: {
     context?: plotEssentials;
     [key: string]: unknown;
   };
